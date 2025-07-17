@@ -152,6 +152,20 @@ public:
      * @return Result containing the frame selection
      */
     Result<nsCOMPtr<nsIFrameSelection>, nsresult> GetFrameSelection();
+    
+    /**
+     * Extend the selection to a new focus point.
+     * 
+     * @param aParent The parent node of the new focus point
+     * @param aOffset The offset within the parent node
+     * @return Result indicating success or failure
+     * 
+     * Error codes:
+     * - NS_ERROR_INVALID_ARG: Invalid parent node or offset
+     * - NS_ERROR_NOT_INITIALIZED: Selection not initialized
+     * - NS_ERROR_FAILURE: Internal failure during extension
+     */
+    Result<void, nsresult> ExtendModern(nsCOMPtr<nsIDOMNode> aParent, int32_t aOffset);
 };
 
 // ==================================================================
@@ -548,6 +562,154 @@ std::vector<nsCOMPtr<nsIDOMRange>> CreateTestRanges(int count) {
 } // namespace mozilla
 
 // ==================================================================
+// EXTEND METHOD MODERNIZATION
+// ==================================================================
+
+/**
+ * Modern implementation of the Extend method that extends the selection
+ * from the current anchor to a new focus point.
+ * 
+ * @param aParentNode The parent node containing the new focus point
+ * @param aOffset The offset within the parent node for the new focus point
+ * @return Result<void, nsresult> indicating success or failure
+ */
+mozilla::Result<void, nsresult> nsTypedSelectionModernExtended::ExtendModern(
+    const nsCOMPtr<nsIDOMNode>& aParentNode, int32_t aOffset) {
+    
+    // Validate input parameters
+    if (!aParentNode) {
+        return mozilla::Err(NS_ERROR_INVALID_ARG);
+    }
+    
+    if (aOffset < 0) {
+        return mozilla::Err(NS_ERROR_INVALID_ARG);
+    }
+    
+    // Get current anchor and focus information
+    nsCOMPtr<nsIDOMNode> anchorNode;
+    int32_t anchorOffset = 0;
+    nsresult rv = GetAnchorNode(getter_AddRefs(anchorNode));
+    if (NS_FAILED(rv) || !anchorNode) {
+        return mozilla::Err(NS_ERROR_FAILURE);
+    }
+    
+    rv = GetAnchorOffset(&anchorOffset);
+    if (NS_FAILED(rv)) {
+        return mozilla::Err(rv);
+    }
+    
+    // Get focus node and offset for comparison
+    nsCOMPtr<nsIDOMNode> focusNode;
+    int32_t focusOffset = 0;
+    rv = GetFocusNode(getter_AddRefs(focusNode));
+    if (NS_FAILED(rv)) {
+        return mozilla::Err(rv);
+    }
+    
+    rv = GetFocusOffset(&focusOffset);
+    if (NS_FAILED(rv)) {
+        return mozilla::Err(rv);
+    }
+    
+    // Check if we're extending to the same position
+    if (focusNode && aParentNode == focusNode && aOffset == focusOffset) {
+        return mozilla::Ok(); // No change needed
+    }
+    
+    // Create a new range for the extended selection
+    nsCOMPtr<nsIDOMRange> newRange;
+    rv = CreateRange(getter_AddRefs(newRange));
+    if (NS_FAILED(rv) || !newRange) {
+        return mozilla::Err(NS_ERROR_FAILURE);
+    }
+    
+    // Determine the direction of the selection
+    // Compare anchor position with new focus position
+    int16_t compareResult = 0;
+    nsCOMPtr<nsIDOMRange> tempRange;
+    rv = CreateRange(getter_AddRefs(tempRange));
+    if (NS_FAILED(rv)) {
+        return mozilla::Err(rv);
+    }
+    
+    // Set up temporary range for comparison
+    rv = tempRange->SetStart(anchorNode, anchorOffset);
+    if (NS_FAILED(rv)) {
+        return mozilla::Err(rv);
+    }
+    
+    rv = tempRange->SetEnd(aParentNode, aOffset);
+    if (NS_FAILED(rv)) {
+        // If we can't set the end, try the other direction
+        rv = tempRange->SetStart(aParentNode, aOffset);
+        if (NS_FAILED(rv)) {
+            return mozilla::Err(rv);
+        }
+        
+        rv = tempRange->SetEnd(anchorNode, anchorOffset);
+        if (NS_FAILED(rv)) {
+            return mozilla::Err(rv);
+        }
+        
+        // Range is from new focus to anchor
+        rv = newRange->SetStart(aParentNode, aOffset);
+        if (NS_FAILED(rv)) {
+            return mozilla::Err(rv);
+        }
+        
+        rv = newRange->SetEnd(anchorNode, anchorOffset);
+        if (NS_FAILED(rv)) {
+            return mozilla::Err(rv);
+        }
+    } else {
+        // Range is from anchor to new focus
+        rv = newRange->SetStart(anchorNode, anchorOffset);
+        if (NS_FAILED(rv)) {
+            return mozilla::Err(rv);
+        }
+        
+        rv = newRange->SetEnd(aParentNode, aOffset);
+        if (NS_FAILED(rv)) {
+            return mozilla::Err(rv);
+        }
+    }
+    
+    // Clear existing selection ranges
+    rv = RemoveAllRanges();
+    if (NS_FAILED(rv)) {
+        return mozilla::Err(rv);
+    }
+    
+    // Add the new extended range
+    rv = AddRange(newRange);
+    if (NS_FAILED(rv)) {
+        return mozilla::Err(rv);
+    }
+    
+    // Notify selection listeners of the change
+    NotifySelectionListeners();
+    
+    return mozilla::Ok();
+}
+
+/**
+ * Legacy compatibility wrapper for the Extend method.
+ * Maintains backward compatibility with existing code.
+ */
+nsresult nsTypedSelectionModernExtended::Extend(
+    nsIDOMNode* aParentNode, int32_t aOffset) {
+    
+    nsCOMPtr<nsIDOMNode> parentNode(aParentNode);
+    auto result = ExtendModern(parentNode, aOffset);
+    
+    if (result.isOk()) {
+        return NS_OK;
+    }
+    
+    return result.unwrapErr();
+}
+
+// ==================================================================
 // MODERNIZATION PATTERN SUMMARY FOR ADDITIONAL METHODS
 // ==================================================================
 
@@ -573,6 +735,11 @@ std::vector<nsCOMPtr<nsIDOMRange>> CreateTestRanges(int count) {
  *    - Before: Raw pointer parameter with nsresult return
  *    - After: Smart pointer parameter with Result<void, nsresult> return
  *    - Benefits: Optional presentation context, better error handling
+ * 
+ * 5. Extend:
+ *    - Before: Raw pointer parameter with nsresult return, complex range logic
+ *    - After: Smart pointer parameter with Result<void, nsresult> return
+ *    - Benefits: Safe pointer handling, clear selection extension logic
  * 
  * COMMON IMPROVEMENTS:
  * - Eliminated manual AddRef/Release patterns

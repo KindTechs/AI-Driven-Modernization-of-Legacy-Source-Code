@@ -1,0 +1,124 @@
+{
+  "timestamp": "2025-07-17T21:00:34.942989",
+  "methods_implemented": [
+    {
+      "name": "GetRangeAt",
+      "modern_version": "GetRangeAtModern",
+      "file": "nsSelection_modernized.cpp",
+      "implemented": true
+    },
+    {
+      "name": "GetRangeCount",
+      "modern_version": "GetRangeCountModern",
+      "file": "nsSelection_modernized.cpp",
+      "implemented": true
+    },
+    {
+      "name": "AddRange",
+      "modern_version": "AddRangeModern",
+      "file": "nsSelection_modernized.cpp",
+      "implemented": true
+    },
+    {
+      "name": "RemoveRange",
+      "modern_version": "RemoveRangeModern",
+      "file": "nsSelection_modernized.cpp",
+      "implemented": true
+    },
+    {
+      "name": "GetIsCollapsed",
+      "modern_version": "GetIsCollapsedModern",
+      "file": "nsSelection_modernized.cpp",
+      "implemented": true
+    },
+    {
+      "name": "GetRangeAt",
+      "modern_version": "GetRangeAtModern",
+      "file": "nsSelection_additional_methods.cpp",
+      "implemented": true
+    },
+    {
+      "name": "GetRangeCount",
+      "modern_version": "GetRangeCountModern",
+      "file": "nsSelection_additional_methods.cpp",
+      "implemented": true
+    },
+    {
+      "name": "GetPresContext",
+      "modern_version": "GetPresContextModern",
+      "file": "nsSelection_additional_methods.cpp",
+      "implemented": true
+    },
+    {
+      "name": "AddItem",
+      "modern_version": "AddItemModern",
+      "file": "nsSelection_additional_methods.cpp",
+      "implemented": true
+    },
+    {
+      "name": "RemoveItem",
+      "modern_version": "RemoveItemModern",
+      "file": "nsSelection_additional_methods.cpp",
+      "implemented": true
+    },
+    {
+      "name": "Clear",
+      "modern_version": "ClearModern",
+      "file": "nsSelection_additional_methods.cpp",
+      "implemented": true
+    }
+  ],
+  "patterns_modernized": {
+    "error_handling": {
+      "legacy_patterns": 52,
+      "modern_patterns": 162,
+      "examples": [
+        "Result<T> types in nsSelection_modernized.cpp",
+        "Result<T> types in nsSelection_additional_methods.cpp"
+      ]
+    },
+    "memory_management": {
+      "legacy_patterns": 0,
+      "modern_patterns": 54,
+      "examples": [
+        "Smart pointers in nsSelection_modernized.cpp",
+        "Smart pointers in nsSelection_additional_methods.cpp"
+      ]
+    },
+    "type_safety": {
+      "legacy_patterns": 0,
+      "modern_patterns": 5,
+      "examples": [
+        "Safe casts in nsSelection_modernized.cpp",
+        "Safe casts in nsSelection_additional_methods.cpp"
+      ]
+    },
+    "parameter_patterns": {
+      "legacy_patterns": 4,
+      "modern_patterns": 9,
+      "examples": [
+        "Modern return values in nsSelection_modernized.cpp",
+        "Modern return values in nsSelection_additional_methods.cpp"
+      ]
+    }
+  },
+  "code_metrics": {
+    "files_created": 5,
+    "lines_of_code": 1391,
+    "test_coverage": 14,
+    "documentation_lines": 785,
+    "modern_cpp_features": 133
+  },
+  "summary": {
+    "total_methods_implemented": 11,
+    "total_modern_patterns": 230,
+    "total_legacy_patterns": 56,
+    "modernization_rate": 80.41958041958041,
+    "files_created": 5,
+    "lines_of_code": 1391,
+    "test_coverage": 14,
+    "documentation_lines": 785,
+    "modern_cpp_features": 133,
+    "completion_percentage": 44.0
+  }
+}

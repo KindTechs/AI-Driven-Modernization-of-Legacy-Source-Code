@@ -181,6 +181,20 @@ public:
      */
     Result<void, nsresult> SelectAllChildrenModern(nsCOMPtr<nsIDOMNode> aParentNode);
     
+    /**
+     * Extend the selection to a specific point.
+     * 
+     * @param aParentNode The parent node to extend to
+     * @param aOffset The offset within the parent node
+     * @return Result indicating success or error code on failure
+     * 
+     * Error codes:
+     * - NS_ERROR_INVALID_ARG: Invalid parent node or offset
+     * - NS_ERROR_NOT_INITIALIZED: Selection not properly initialized
+     * - NS_ERROR_UNEXPECTED: Internal error during selection extension
+     */
+    Result<void, nsresult> ExtendModern(nsCOMPtr<nsIDOMNode> aParentNode, int32_t aOffset);
+    
     // ==================================================================
     // COMPATIBILITY API (maintains original nsISelection interface)
     // ==================================================================
