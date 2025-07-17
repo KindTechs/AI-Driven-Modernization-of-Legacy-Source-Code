@@ -9,6 +9,152 @@ import json
 import argparse
 from datetime import datetime
 from pathlib import Path
+
+
+class KPIReportGenerator:
+    def __init__(self, root_dir):
+        self.root_dir = Path(root_dir)
+        self.reports_dir = self.root_dir / 'analysis' / 'reports'
+        self.reports_dir.mkdir(parents=True, exist_ok=True)
+
+    def load_kpi_data(self, kpi_file):
+        """Load KPI data from JSON file."""
+        try:
+            with open(kpi_file, 'r') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            print(f"KPI data file not found: {kpi_file}")
+            return None
+        except json.JSONDecodeError as e:
+            print(f"Error parsing KPI data: {e}")
+            return None
+
+    def load_progress_data(self, progress_file):
+        """Load progress tracking data from JSON file."""
+        try:
+            with open(progress_file, 'r') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            print(f"Progress data file not found: {progress_file}")
+            return None
+        except json.JSONDecodeError as e:
+            print(f"Error parsing progress data: {e}")
+            return None
+
+    def generate_executive_summary(self, kpi_data, progress_data):
+        """Generate executive summary section."""
+        summary = []
+        summary.append("EXECUTIVE SUMMARY")
+        summary.append("=" * 50)
+
+        if kpi_data:
+            kpi_summary = kpi_data.get('kpis', {}).get('summary', {})
+            summary.append(f"Files analyzed: {kpi_summary.get('files_analyzed', 0)}")
+            summary.append(f"Functions analyzed: {kpi_summary.get('total_functions', 0)}")
+            summary.append(f"Overall modernization score: {kpi_summary.get('modernization_score', 0):.1f}%")
+            summary.append(f"Code quality score: {kpi_summary.get('code_quality_score', 0):.1f}%")
+            summary.append(f"Documentation score: {kpi_summary.get('documentation_score', 0):.1f}%")
+
+        if progress_data:
+            progress_summary = progress_data.get('summary', {})
+            summary.append(f"\nnsSelection Progress:")
+            summary.append(f"Methods modernized: {progress_summary.get('methods_modernized', 0)}/{progress_summary.get('total_methods_tracked', 0)}")
+            summary.append(f"Modernization rate: {progress_summary.get('modernization_rate', 0):.1f}%")
+            summary.append(f"Average method score: {progress_summary.get('average_modernization_score', 0):.1f}%")
+
+        return summary
+
+    def generate_kpi_trends(self, kpi_data_list):
+        """Generate KPI trends section from multiple data points."""
+        if not kpi_data_list or len(kpi_data_list) < 2:
+            return ["KPI TRENDS", "=" * 20, "Insufficient data for trend analysis"]
+
+        trends = []
+        trends.append("KPI TRENDS")
+        trends.append("=" * 20)
+
+        # Extract trend data
+        timestamps = []
+        modernization_scores = []
+        code_quality_scores = []
+        documentation_scores = []
+
+        for data in kpi_data_list:
+            timestamp = data.get('timestamp', '')
+            kpi_summary = data.get('kpis', {}).get('summary', {})
+
+            timestamps.append(timestamp)
+            modernization_scores.append(kpi_summary.get('modernization_score', 0))
+            code_quality_scores.append(kpi_summary.get('code_quality_score', 0))
+            documentation_scores.append(kpi_summary.get('documentation_score', 0))
+
+        # Calculate trends
+        if len(modernization_scores) >= 2:
+            mod_trend = modernization_scores[-1] - modernization_scores[0]
+            cq_trend = code_quality_scores[-1] - code_quality_scores[0]
+            doc_trend = documentation_scores[-1] - documentation_scores[0]
+
+            trends.append(f"Modernization score trend: {mod_trend:+.1f}%")
+            trends.append(f"Code quality score trend: {cq_trend:+.1f}%")
+            trends.append(f"Documentation score trend: {doc_trend:+.1f}%")
+
+        # Recent changes
+        if len(modernization_scores) >= 2:
+            recent_mod = modernization_scores[-1] - modernization_scores[-2]
+            recent_cq = code_quality_scores[-1] - code_quality_scores[-2]
+            recent_doc = documentation_scores[-1] - documentation_scores[-2]
+
+            trends.append(f"\nRecent changes:")
+            trends.append(f"Modernization: {recent_mod:+.1f}%")
+            trends.append(f"Code quality: {recent_cq:+.1f}%")
+            trends.append(f"Documentation: {recent_doc:+.1f}%")
+
+        return trends
+
+    def generate_detailed_metrics(self, kpi_data):
+        """Generate detailed metrics section."""
+        if not kpi_data:
+            return ["DETAILED METRICS", "=" * 30, "No KPI data available"]
+
+        metrics = []
+        metrics.append("DETAILED METRICS")
+        metrics.append("=" * 30)
+
+        kpis = kpi_data.get('kpis', {})
+
+        # Code Quality Metrics
+        cq = kpis.get('code_quality', {})
+        if cq:
+            metrics.append("\nCode Quality:")
+            metrics.append(f"  Average cyclomatic complexity: {cq.get('average_cyclomatic_complexity', 0):.2f}")
+            metrics.append(f"  Average function length: {cq.get('average_function_length', 0):.1f} lines")
+            metrics.append(f"  Comment ratio: {cq.get('overall_comment_ratio', 0):.1f}%")
+            metrics.append(f"  Total functions: {cq.get('total_functions', 0)}")
+            metrics.append(f"  Total files: {cq.get('total_files', 0)}")
+
+        # Modernization Coverage
+        mc = kpis.get('modernization_coverage', {})
+        if mc:
+            metrics.append("\nModernization Coverage:")
+            metrics.append(f"  Overall rate: {mc.get('modernization_rate', 0):.1f}%")
+            metrics.append(f"  Legacy patterns: {mc.get('total_legacy_patterns', 0)}")
+            metrics.append(f"  Modern patterns: {mc.get('total_modern_patterns', 0)}")
+
+            # Pattern breakdown
+            legacy_breakdown = mc.get('legacy_breakdown', {})
+            ...
+
+#!/usr/bin/env python3
+"""
+AI-Driven Mozilla 1.0 Codebase Modernization - KPI Report Generator
+This script creates text-based reports of KPI measurements and progress tracking.
+"""
+
+import os
+import json
+import argparse
+from datetime import datetime
+from pathlib import Path
 import subprocess
 import sys
 

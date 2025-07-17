@@ -1,0 +1,196 @@
+{
+  "methods": {
+    "GetRangeAt": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": true,
+      "patterns": {
+        "error_handling": {
+          "legacy": 4,
+          "modern": 8
+        },
+        "memory_management": {
+          "legacy": 1,
+          "modern": 1
+        },
+        "casts": {
+          "legacy": 0,
+          "modern": 1
+        },
+        "out_parameters": {
+          "legacy": 0,
+          "modern": 0
+        },
+        "null_checks": {
+          "legacy": 0,
+          "modern": 0
+        }
+      }
+    },
+    "GetRangeCount": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": true,
+      "patterns": {
+        "error_handling": {
+          "legacy": 4,
+          "modern": 8
+        },
+        "memory_management": {
+          "legacy": 0,
+          "modern": 1
+        },
+        "casts": {
+          "legacy": 0,
+          "modern": 1
+        },
+        "out_parameters": {
+          "legacy": 0,
+          "modern": 0
+        },
+        "null_checks": {
+          "legacy": 0,
+          "modern": 0
+        }
+      }
+    },
+    "AddRange": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": true,
+      "patterns": {}
+    },
+    "RemoveRange": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": true,
+      "patterns": {}
+    },
+    "GetIsCollapsed": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": true,
+      "patterns": {}
+    },
+    "GetPresContext": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": false,
+      "patterns": {}
+    },
+    "AddItem": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": false,
+      "patterns": {}
+    },
+    "RemoveItem": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": false,
+      "patterns": {}
+    },
+    "Clear": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": true,
+      "patterns": {
+        "error_handling": {
+          "legacy": 6,
+          "modern": 9
+        },
+        "memory_management": {
+          "legacy": 3,
+          "modern": 4
+        },
+        "casts": {
+          "legacy": 0,
+          "modern": 0
+        },
+        "out_parameters": {
+          "legacy": 0,
+          "modern": 0
+        },
+        "null_checks": {
+          "legacy": 0,
+          "modern": 0
+        }
+      }
+    },
+    "GetAnchorNode": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": true,
+      "patterns": {}
+    },
+    "GetFocusNode": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": true,
+      "patterns": {}
+    },
+    "Collapse": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": true,
+      "patterns": {}
+    },
+    "Extend": {
+      "found": false,
+      "modern_version": false,
+      "legacy_version": false,
+      "patterns": {}
+    },
+    "SelectAllChildren": {
+      "found": true,
+      "modern_version": true,
+      "legacy_version": true,
+      "patterns": {}
+    }
+  },
+  "method_scores": {
+    "GetRangeAt": 73.33333333333333,
+    "GetRangeCount": 83.33333333333333,
+    "AddRange": 100.0,
+    "RemoveRange": 100.0,
+    "GetIsCollapsed": 100.0,
+    "GetPresContext": 100.0,
+    "AddItem": 100.0,
+    "RemoveItem": 100.0,
+    "Clear": 63.42857142857143,
+    "GetAnchorNode": 100.0,
+    "GetFocusNode": 100.0,
+    "Collapse": 100.0,
+    "SelectAllChildren": 100.0
+  },
+  "patterns": {
+    "error_handling": {
+      "legacy": 14,
+      "modern": 25
+    },
+    "memory_management": {
+      "legacy": 4,
+      "modern": 6
+    },
+    "casts": {
+      "legacy": 0,
+      "modern": 2
+    },
+    "out_parameters": {
+      "legacy": 0,
+      "modern": 0
+    },
+    "null_checks": {
+      "legacy": 0,
+      "modern": 0
+    }
+  },
+  "summary": {
+    "total_methods_tracked": 14,
+    "methods_found": 13,
+    "methods_modernized": 13,
+    "modernization_rate": 92.85714285714286,
+    "average_modernization_score": 93.85347985347985,
+    "analysis_date": "2025-07-17T20:15:15.314970"
+  }
+}

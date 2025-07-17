@@ -1,0 +1,58 @@
+================================================================================
+Mozilla 1.0 Modernization KPI Report
+Generated on: 2025-07-17 20:11:25
+================================================================================
+
+SUMMARY:
+Files analyzed: 10472
+Total functions: 38201
+Modernization score: 21.98%
+Code quality score: 74.15%
+Documentation score: 48.89%
+
+CODE QUALITY METRICS:
+Average cyclomatic complexity: 5.17
+Average function length: 20.33 lines
+Overall comment ratio: 38.83%
+
+MODERNIZATION COVERAGE:
+Modernization rate: 21.98%
+Total legacy patterns: 104523
+Total modern patterns: 29444
+
+Legacy pattern breakdown:
+  legacy_error_handling_NS_SUCCEEDED: 9502
+  legacy_error_handling_NS_FAILED: 16750
+  legacy_error_handling_error_codes: 21972
+  legacy_memory_management_malloc_free: 2641
+  legacy_memory_management_new_delete: 21993
+  legacy_memory_management_addref_release: 1584
+  legacy_casts_c_style_casts: 29810
+  legacy_casts_static_casts: 112
+  legacy_casts_dynamic_casts: 42
+  legacy_casts_reinterpret_casts: 117
+
+Modern pattern breakdown:
+  smart_pointers: 29163
+  result_types: 47
+  optional_types: 2
+  auto_keyword: 232
+
+DOCUMENTATION METRICS:
+Documentation coverage: 48.89%
+Total API docs: 18677
+Total public methods: 4788
+
+TOP FILES NEEDING MODERNIZATION:
+ 1. security/nss/lib/ckfw/builtins/certdata.c: 2083 legacy patterns
+ 2. editor/libeditor/html/nsHTMLEditRules.cpp: 835 legacy patterns
+ 3. content/base/src/nsSelection.cpp: 679 legacy patterns
+ 4. editor/libeditor/html/nsHTMLEditor.cpp: 567 legacy patterns
+ 5. content/xul/document/src/nsXULDocument.cpp: 497 legacy patterns
+ 6. editor/txmgr/tests/TestTXMgr.cpp: 492 legacy patterns
+ 7. editor/libeditor/base/nsEditor.cpp: 486 legacy patterns
+ 8. mailnews/imap/src/nsImapMailFolder.cpp: 471 legacy patterns
+ 9. modules/plugin/base/src/nsPluginHostImpl.cpp: 427 legacy patterns
+10. content/base/src/nsDocumentViewer.cpp: 426 legacy patterns
+
+================================================================================

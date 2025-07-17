@@ -476,6 +476,67 @@ class KPIMeasurer:
             }, f, indent=2)
         
         print(f"Detailed KPI data saved: {json_file}")
+    
+    def analyze_documentation(self):
+        """Analyze documentation metrics for the codebase."""
+        doc_metrics = {
+            'total_doc_files': 0,
+            'total_doc_lines': 0,
+            'modernization_docs': 0,
+            'template_docs': 0,
+            'api_docs': 0,
+            'doc_coverage': 0.0
+        }
+        
+        # Find documentation files
+        doc_patterns = ['*.md', '*.txt', '*.rst', '*.doc']
+        doc_files = []
+        
+        for pattern in doc_patterns:
+            doc_files.extend(glob.glob(os.path.join(self.root_dir, '**', pattern), recursive=True))
+        
+        doc_metrics['total_doc_files'] = len(doc_files)
+        
+        # Count documentation lines and categorize
+        for file_path in doc_files:
+            try:
+                with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    content = f.read()
+                    lines = content.split('\n')
+                    doc_metrics['total_doc_lines'] += len(lines)
+                    
+                    # Check for modernization documentation
+                    if any(keyword in content.lower() for keyword in ['modern', 'result<', 'smart pointer', 'template']):
+                        doc_metrics['modernization_docs'] += 1
+                    
+                    # Check for template documentation
+                    if 'template' in os.path.basename(file_path).lower():
+                        doc_metrics['template_docs'] += 1
+                    
+                    # Check for API documentation
+                    if any(keyword in content.lower() for keyword in ['api', 'method', 'function', 'class']):
+                        doc_metrics['api_docs'] += 1
+                        
+            except Exception as e:
+                print(f"Warning: Could not read {file_path}: {e}")
+        
+        # Calculate documentation coverage
+        if doc_metrics['total_doc_files'] > 0:
+            doc_metrics['doc_coverage'] = (doc_metrics['modernization_docs'] / doc_metrics['total_doc_files']) * 100
+        
+        return doc_metrics
+    
+    def calculate_documentation_score(self, doc_metrics):
+        """Calculate an overall documentation score."""
+        if doc_metrics['total_doc_files'] == 0:
+            return 0.0
+        
+        # Score based on various factors
+        coverage_score = min(doc_metrics['doc_coverage'], 100) * 0.4
+        template_score = min((doc_metrics['template_docs'] / max(doc_metrics['total_doc_files'], 1)) * 100, 100) * 0.3
+        api_score = min((doc_metrics['api_docs'] / max(doc_metrics['total_doc_files'], 1)) * 100, 100) * 0.3
+        
+        return coverage_score + template_score + api_score
 
 def main():
     parser = argparse.ArgumentParser(description='Measure modernization KPIs for Mozilla 1.0 codebase')

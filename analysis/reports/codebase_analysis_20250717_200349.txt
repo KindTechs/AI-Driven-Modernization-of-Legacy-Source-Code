@@ -1,0 +1,178 @@
+===== Mozilla 1.0 Codebase Analysis Report =====
+Generated on: Thu Jul 17 20:03:49 CEST 2025
+========================================
+
+File Type Distribution:
+======================
+C++ Source files:     3963
+Header files:     4540
+C Source files:     1969
+Interface Definition Language files:     1063
+JavaScript files:      568
+Makefile files:      328
+Makefile files:       16
+Python files:       47
+Perl files:      156
+Shell Script files:       60
+
+Total Files:    34776
+
+Directory Structure (Top Level):
+================================
+.
+./.git
+./CVS
+./README
+./accessible
+./analysis
+./build
+./calendar
+./caps
+./config
+./content
+./db
+./dbm
+./directory
+./docshell
+./dom
+./editor
+./embedding
+./expat
+./extensions
+
+Core Module Directories:
+=======================
+js:      611 files
+layout:     3103 files
+content:     1045 files
+netwerk:      944 files
+xpcom:     1203 files
+dom:      550 files
+widget:      725 files
+gfx:      533 files
+htmlparser:      474 files
+editor:      670 files
+
+Lines of Code Analysis:
+======================
+C++ Source: 1837802 lines in     3963 files
+Header: 782645 lines in     4540 files
+C Source: 1094725 lines in     1969 files
+IDL: 96846 lines in     1063 files
+JavaScript: 172719 lines in      568 files
+
+Largest Files (Potential Complexity Hotspots):
+=============================================
+ 1798203 total
+ 1717882 total
+  199087 total
+   26086 ./security/nss/lib/pkix/include/pkix.h
+   24377 ./security/nss/lib/pkix/include/nsspkix.h
+   14321 ./layout/html/style/src/nsCSSFrameConstructor.cpp
+   11421 ./security/nss/lib/ckfw/builtins/certdata.c
+   10837 ./modules/libimg/mng/libmng_pixels.c
+    8817 ./modules/libimg/mng/libmng_chunk_io.c
+    8127 ./editor/libeditor/html/nsHTMLEditRules.cpp
+    7967 ./security/nss/lib/ssl/ssl3con.c
+    7961 ./layout/html/base/src/nsPresShell.cpp
+    7937 ./content/base/src/nsDocumentViewer.cpp
+    7897 ./xpinstall/wizard/windows/setup/extra.c
+    7862 ./layout/html/table/src/nsTableFrame.cpp
+    7773 ./content/base/src/nsSelection.cpp
+    7710 ./mailnews/imap/src/nsImapProtocol.cpp
+    7429 ./xpinstall/wizard/os2/setup/extra.c
+    7397 ./other-licenses/freetype/src/truetype/ttinterp.c
+    7386 ./content/xul/document/src/nsXULDocument.cpp
+
+Comment Density Analysis:
+========================
+Sample analysis of first 10 C/C++ files:
+  ./xpcom/glue/nsDebug.cpp: 59/     534 lines (11.04%)
+  ./xpcom/glue/nsISupportsUtils.h: 35/     275 lines (12.72%)
+  ./xpcom/glue/nsWeakReference.h: 13/     126 lines (10.31%)
+  ./xpcom/glue/nsIGenericFactory.h: 42/     445 lines (9.43%)
+  ./xpcom/glue/nsGenericFactory.h: 8/     124 lines (6.45%)
+  ./xpcom/glue/nsMemory.h: 13/     146 lines (8.90%)
+  ./xpcom/glue/nsCOMPtr.cpp: 3/      90 lines (3.33%)
+  ./xpcom/glue/nsGenericFactory.cpp: 36/     508 lines (7.08%)
+  ./xpcom/glue/nsMemory.cpp: 6/     131 lines (4.58%)
+  ./xpcom/glue/nsComponentManagerUtils.cpp: 3/     133 lines (2.25%)
+
+Memory Management Pattern Analysis:
+==================================
+malloc/free patterns:
+   10666
+new/delete patterns:
+   15431
+AddRef/Release patterns:
+   20159
+
+Error Handling Pattern Analysis:
+===============================
+NS_SUCCEEDED/NS_FAILED patterns:
+   26226
+Return error codes (NS_ERROR_*):
+   21582
+
+Cast Pattern Analysis:
+=====================
+C-style casts:
+    8210
+static_cast usage:
+     103
+reinterpret_cast usage:
+     118
+
+Module-Level Statistics:
+=======================
+=== js ===
+  Total files:      611
+  C++ files:       55
+  Header files:       78
+  Total lines: 145182
+
+=== layout ===
+  Total files:     3103
+  C++ files:      215
+  Header files:      243
+  Total lines: 245012
+
+=== content ===
+  Total files:     1045
+  C++ files:      258
+  Header files:      258
+  Total lines: 251810
+
+=== netwerk ===
+  Total files:      944
+  C++ files:      160
+  Header files:      130
+  Total lines: 91339
+
+=== xpcom ===
+  Total files:     1203
+  C++ files:      235
+  Header files:      179
+  Total lines: 190980
+
+=== dom ===
+  Total files:      550
+  C++ files:       18
+  Header files:       53
+  Total lines: 25970
+
+=== widget ===
+  Total files:      725
+  C++ files:      206
+  Header files:      254
+  Total lines: 140999
+
+=== gfx ===
+  Total files:      533
+  C++ files:      164
+  Header files:      215
+  Total lines: 183329
+
+
+===== End of Analysis Report =====
+Report saved to: analysis/reports/codebase_analysis_20250717_200420.txt

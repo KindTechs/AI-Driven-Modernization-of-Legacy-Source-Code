@@ -1,0 +1,64 @@
+================================================================================
+nsSelection Modernization Progress Report
+Generated on: 2025-07-17 20:15:15
+================================================================================
+
+SUMMARY:
+Total methods tracked: 14
+Methods found in codebase: 13
+Methods modernized: 13
+Modernization rate: 92.9%
+Average modernization score: 93.9%
+
+METHOD MODERNIZATION STATUS:
+Method                    Found    Modern   Legacy   Score   
+-----------------------------------------------------------------
+GetRangeAt                Yes      Yes      Yes      73.3    
+GetRangeCount             Yes      Yes      Yes      83.3    
+AddRange                  Yes      Yes      Yes      100.0   
+RemoveRange               Yes      Yes      Yes      100.0   
+GetIsCollapsed            Yes      Yes      Yes      100.0   
+GetPresContext            Yes      Yes      No       100.0   
+AddItem                   Yes      Yes      No       100.0   
+RemoveItem                Yes      Yes      No       100.0   
+Clear                     Yes      Yes      Yes      63.4    
+GetAnchorNode             Yes      Yes      Yes      100.0   
+GetFocusNode              Yes      Yes      Yes      100.0   
+Collapse                  Yes      Yes      Yes      100.0   
+Extend                    No       No       No       0.0     
+SelectAllChildren         Yes      Yes      Yes      100.0   
+
+PATTERN MODERNIZATION ANALYSIS:
+error_handling:
+  Legacy patterns: 14
+  Modern patterns: 25
+  Modernization: 64.1%
+
+memory_management:
+  Legacy patterns: 4
+  Modern patterns: 6
+  Modernization: 60.0%
+
+casts:
+  Legacy patterns: 0
+  Modern patterns: 2
+  Modernization: 100.0%
+
+
+TOP PRIORITIES FOR MODERNIZATION:
+ 1. Clear: 36.6 points needed
+ 2. GetRangeAt: 26.7 points needed
+ 3. GetRangeCount: 16.7 points needed
+ 4. AddRange: 0.0 points needed
+ 5. RemoveRange: 0.0 points needed
+ 6. GetIsCollapsed: 0.0 points needed
+ 7. GetPresContext: 0.0 points needed
+ 8. AddItem: 0.0 points needed
+ 9. RemoveItem: 0.0 points needed
+10. GetAnchorNode: 0.0 points needed
+
+RECOMMENDATIONS:
+- Update out parameters to return values
+- Replace C-style casts with safe casts
+
+================================================================================
